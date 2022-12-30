@@ -14,6 +14,7 @@
             <div class="card-body">
                 <form action="{{ route('mahasiswa.update', $mahasiswa->id) }}" method="POST">
                     @csrf
+                    @method('PUT')
                     <div class="mb-3">
                       <label for="nim" class="form-label">NIM</label>
                       <input type="text" class="form-control" name="nim" value="{{ $mahasiswa->nim }}" id="nim">

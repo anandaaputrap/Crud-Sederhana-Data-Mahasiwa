@@ -85,7 +85,19 @@ class MahasiswaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'nim' => 'required|min:5|max:10',
+            'nama' => 'required|min:3',
+            'jurusan' => 'required|min:3',
+        ]);
+
+        $mahasiswa = Mahasiswa::find($id);
+        $mahasiswa->nim = $request->nim;
+        $mahasiswa->nama = $request->nama;
+        $mahasiswa->jurusan = $request->jurusan;
+        $mahasiswa->save();
+
+        return to_route('mahasiswa.index')->with('success', 'Data Berhasil Dirubah');
     }
 
     /**
@@ -96,6 +108,9 @@ class MahasiswaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $mahasiswa = Mahasiswa::find($id);
+        $mahasiswa->delete();
+
+        return back()->with('success', 'Data Berhasil Dihapus');
     }
 }

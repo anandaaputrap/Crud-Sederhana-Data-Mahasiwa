@@ -10,6 +10,11 @@
     <div class="container mt-5">
         <h1 class="text-center mb-5">Data Mahasiswa Sederhana</h1>
         <a href="{{ route('mahasiswa.create') }}" class="btn btn-primary mb-3">Tambah</a>
+        @if (session('success'))
+            <div class="alert alert-success" role="alert">
+                {{ session('success') }}
+            </div>
+        @endif
         <div class="card">
             <div class="card-body">
                 <table class="table">
@@ -21,18 +26,28 @@
                         <th>Aksi</th>
                     </thead>
                     <tbody>
+                        @if ($mahasiswa->count()>0)
                         @foreach ($mahasiswa as $no => $hasil)
-                            <tr>
-                                <th>{{ $no+1 }}</th>
-                                <td>{{ $hasil->nim }}</td>
-                                <td>{{ $hasil->nama }}</td>
-                                <td>{{ $hasil->jurusan }}</td>
-                                <td>
-                                    <a href="" class="btn btn-success btn-sm">Edit</a>
+                        <tr>
+                            <th>{{ $no+1 }}</th>
+                            <td>{{ $hasil->nim }}</td>
+                            <td>{{ $hasil->nama }}</td>
+                            <td>{{ $hasil->jurusan }}</td>
+                            <td>
+                                <form action="{{ route('mahasiswa.destroy', $hasil->id) }}" method="POST">
+                                    @csrf
+                                    @method('delete')
+                                    <a href="{{ route('mahasiswa.edit', $hasil->id) }}" class="btn btn-success btn-sm">Edit</a>
                                     <button class="btn btn-danger btn-sm">Hapus</button>
-                                </td>
-                            </tr>
-                        @endforeach
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                        @else
+                        <tr>
+                            <td colspan="10" align="center">Tidak Ada Data</td>
+                        </tr>
+                        @endif
                     </tbody>
                 </table>
             </div>
