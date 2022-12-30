@@ -9,6 +9,7 @@
   <body>
     <div class="container mt-5">
         <h1 class="text-center mb-5">Data Mahasiswa Sederhana</h1>
+        <a href="{{ route('mahasiswa.create') }}" class="btn btn-primary mb-3">Tambah</a>
         <div class="card">
             <div class="card-body">
                 <table class="table">
@@ -20,14 +21,18 @@
                         <th>Aksi</th>
                     </thead>
                     <tbody>
-                        <td>1</td>
-                        <td>19390100010</td>
-                        <td>Ananda</td>
-                        <td>Sistem Informasi</td>
-                        <td>
-                            <a href="" class="btn btn-success btn-sm">Edit</a>
-                            <button class="btn btn-danger btn-sm">Hapus</button>
-                        </td>
+                        @foreach ($mahasiswa as $no => $hasil)
+                            <tr>
+                                <th>{{ $no+1 }}</th>
+                                <td>{{ $hasil->nim }}</td>
+                                <td>{{ $hasil->nama }}</td>
+                                <td>{{ $hasil->jurusan }}</td>
+                                <td>
+                                    <a href="" class="btn btn-success btn-sm">Edit</a>
+                                    <button class="btn btn-danger btn-sm">Hapus</button>
+                                </td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
